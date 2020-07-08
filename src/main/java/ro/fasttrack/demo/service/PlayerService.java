@@ -26,10 +26,17 @@ public class PlayerService {
     }
 
     public Player getPlayerByUsername(String username) {
-        return getOrThrowByUsername(username);
+        Player player = getOrThrowByUsername(username);
+        if (player.getId() == null) {
+            return playerRepository.save(player);
+        }
+        return player;
     }
 
     public Player addPlayer(Player player) {
+        if (player == null) {
+            return new Player("No player set");
+        }
         Player playerToAdd = getPlayerByUsername(player.getUsername());
         return playerRepository.save(playerToAdd);
     }

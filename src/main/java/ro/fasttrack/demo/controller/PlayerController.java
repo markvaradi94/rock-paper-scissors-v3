@@ -22,9 +22,9 @@ public class PlayerController {
         return playerService.getAllPlayers();
     }
 
-    @GetMapping("{id}")
-    public Player findPlayerById(@PathVariable Integer id) {
-        return playerService.getPlayerById(id);
+    @GetMapping("{username}")
+    public Player findPlayerByUsername(@PathVariable String username) {
+        return playerService.getPlayerByUsername(username);
     }
 
     @GetMapping("{username}/history")

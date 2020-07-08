@@ -52,8 +52,24 @@ public class GameService {
     public List<Game> gamesWithPlayerInvolved(String username) {
         Player playerToFind = playerService.getPlayerByUsername(username);
         return gameRepository.findAll().stream()
-                .filter(game -> gameInvolvesPlayer(game, username))
+                .filter(game -> gameInvolvesPlayer(game, playerToFind.getUsername()))
                 .collect(Collectors.toList());
+    }
+
+    public Game addPlayer1(String username, String gameUrl) {
+        Player player1 = playerService.getPlayerByUsername(username);
+        Game game = getGameByUrl(gameUrl);
+        game.setPlayer1(player1);
+        playerService.addPlayer(player1);
+        return addGame(game);
+    }
+
+    public Game addPlayer2(String username, String gameUrl) {
+        Player player2 = playerService.getPlayerByUsername(username);
+        Game game = getGameByUrl(gameUrl);
+        game.setPlayer2(player2);
+        playerService.addPlayer(player2);
+        return addGame(game);
     }
 
     public Game pickHandForPlayer1(String gameUrl, Hand hand) {
@@ -108,7 +124,9 @@ public class GameService {
         if (game.getId() != null) {
             gameToAdd = getGameById(game.getId());
         } else {
-            gameToAdd = new Game(playerService.addPlayer(game.getPlayer1()), playerService.addPlayer(game.getPlayer2()));
+            gameToAdd = new Game(playerService.addPlayer(game.getPlayer1()),
+                    playerService.addPlayer(game.getPlayer2() == null ? new Player("Waiting for player to join") : game.getPlayer2()),
+                    generateRandomUrl());
         }
         return gameToAdd;
     }
@@ -125,7 +143,8 @@ public class GameService {
 
     private void checkIdenticalPlayers(Game game) {
         Player player1 = playerService.getPlayerById(game.getPlayer1().getId());
-        Player player2 = playerService.getPlayerById(game.getPlayer2().getId());
+        Player player2 = playerService.getPlayerById(game.getPlayer2().getId()) == null ? new Player("Waiting for player to join") :
+                playerService.getPlayerById(game.getPlayer2().getId());
         if (player1.getId().equals(player2.getId()) || player1.getUsername().equals(player2.getUsername())) {
             throw new SamePlayerException("Cannot create game with identical players");
         }
