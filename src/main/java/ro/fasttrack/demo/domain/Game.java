@@ -50,20 +50,4 @@ public class Game {
     public Game(Player player1, Player player2, String gameUrl) {
         this(player1, player2, gameUrl, GameStatus.WAITING_FOR_PLAYER, Hand.NONE, Hand.NONE);
     }
-
-    public Game(Player player1, Player player2, GameStatus gameStatus, Hand player1Hand, Hand player2Hand) {
-        this(player1, player2, null, gameStatus, player1Hand, player2Hand);
-    }
-
-    public Game(Player player1, Player player2) {
-        this(player1, player2, null, GameStatus.WAITING_FOR_PLAYER, Hand.NONE, Hand.NONE);
-    }
-
-    public Game(Player player1) {
-        this(player1, new Player("No player set"));
-    }
-
-    public Game(Player player1, String gameUrl) {
-        this(player1, new Player("No player set"), gameUrl);
-    }
 }

@@ -3,7 +3,6 @@ package ro.fasttrack.demo.controller;
 import org.springframework.web.bind.annotation.*;
 import ro.fasttrack.demo.domain.Game;
 import ro.fasttrack.demo.domain.Hand;
-import ro.fasttrack.demo.domain.Player;
 import ro.fasttrack.demo.service.GameService;
 
 import java.util.List;

@@ -47,38 +47,8 @@ public class PlayerService {
         return playerRepository.save(playerToUpdate);
     }
 
-    public Player updatePlayerByUsername(String username, Player player) {
-        Player playerToUpdate = getOrThrowByUsername(username);
-        playerToUpdate.setUsername(player.getUsername() == null ? playerToUpdate.getUsername() : player.getUsername());
-        return playerRepository.save(playerToUpdate);
-    }
-
-    public Player replacePlayerById(Integer id, Player player) {
-        Player playerToReplace = getOrThrowById(id);
-        playerToReplace.setUsername(player.getUsername());
-        playerToReplace.setWins(player.getWins());
-        playerToReplace.setLosses(player.getLosses());
-        playerToReplace.setDraws(player.getDraws());
-        return playerRepository.save(playerToReplace);
-    }
-
-    public Player replacePlayerByUsername(String username, Player player) {
-        Player playerToReplace = getOrThrowByUsername(username);
-        playerToReplace.setUsername(player.getUsername());
-        playerToReplace.setWins(player.getWins());
-        playerToReplace.setLosses(player.getLosses());
-        playerToReplace.setDraws(player.getDraws());
-        return playerRepository.save(playerToReplace);
-    }
-
     public Player deletePlayerById(Integer id) {
         Player playerToDelete = getOrThrowById(id);
-        playerRepository.delete(playerToDelete);
-        return playerToDelete;
-    }
-
-    public Player deletePlayerByUsername(String username) {
-        Player playerToDelete = getOrThrowByUsername(username);
         playerRepository.delete(playerToDelete);
         return playerToDelete;
     }

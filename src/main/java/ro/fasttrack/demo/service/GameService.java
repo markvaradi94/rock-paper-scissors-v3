@@ -42,13 +42,6 @@ public class GameService {
         return getOrThrow(id);
     }
 
-    public List<Game> gamesWithPlayerInvolved(Integer playerId) {
-        Player playerToFind = playerService.getPlayerById(playerId);
-        return gameRepository.findAll().stream()
-                .filter(game -> gameInvolvesPlayer(game, playerToFind.getId()))
-                .collect(Collectors.toList());
-    }
-
     public List<Game> gamesWithPlayerInvolved(String username) {
         Player playerToFind = playerService.getPlayerByUsername(username);
         return gameRepository.findAll().stream()
@@ -97,10 +90,6 @@ public class GameService {
         summary.put("player2Hand", game.getPlayer2Hand().toString());
         summary.put("gameStatus", game.getGameStatus().message());
         return summary;
-    }
-
-    private boolean gameInvolvesPlayer(Game game, Integer playerId) {
-        return game.getPlayer1().getId().equals(playerId) || game.getPlayer2().getId().equals(playerId);
     }
 
     private boolean gameInvolvesPlayer(Game game, String username) {
